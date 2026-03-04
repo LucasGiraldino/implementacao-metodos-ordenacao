@@ -3,10 +3,16 @@ import java.util.Random;
 public class ListaDuplamente {
     private NoLista inicio;
     private NoLista fim;
+    private int quantidade;
 
     public ListaDuplamente() {
         this.inicio = null;
         this.fim = null;
+        this.quantidade = 0;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
     }
 
     public NoLista getInicio() {
@@ -28,6 +34,7 @@ public class ListaDuplamente {
             novoNo.setAnt(noFim);
             fim = novoNo;
         }
+        quantidade++;
     }
 
     public void geraLista() {
@@ -87,16 +94,6 @@ public class ListaDuplamente {
         if (info == meio.getInfo())
             return meio;
         return null;
-    }
-
-    public int sizeLista() {
-        int cont=0;
-        NoLista aux = inicio;
-        while(aux != null) {
-            aux = aux.getProx();
-            cont++;
-        }
-        return cont;
     }
 
     // ===================================================
@@ -215,7 +212,7 @@ public class ListaDuplamente {
     }
 
     public void CombSort() {
-        int comb = sizeLista(), aux;
+        int comb = getQuantidade(), aux;
         NoLista pontIni, pontFim;
         while(comb > 0) {
             comb = comb * 10 / 13;
