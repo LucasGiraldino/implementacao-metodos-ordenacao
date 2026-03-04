@@ -15,12 +15,32 @@ public class ListaDuplamente {
         return quantidade;
     }
 
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    
     public NoLista getInicio() {
         return inicio;
     }
 
+    public void setInicio(NoLista inicio) {
+        this.inicio = inicio;
+    }
+
     public NoLista getFim() {
         return fim;
+    }
+
+    public void setFim(NoLista fim) {
+        this.fim = fim;
+    }
+
+    public void inicializaLista() {
+        NoLista aux = inicio;
+        for (int i = 0; i < quantidade; i++) {
+            aux.setInfo(0);
+            aux = aux.getProx();
+        }
     }
 
     public void inserirNoFinal(int info) {
@@ -94,6 +114,17 @@ public class ListaDuplamente {
         if (info == meio.getInfo())
             return meio;
         return null;
+    }
+
+    public int getMaiorElementoLista() {
+        NoLista auxLista = inicio;
+        int maior = 0;
+        while(auxLista != null) {
+            if(auxLista.getInfo() > maior) 
+                maior = auxLista.getInfo();
+            auxLista = auxLista.getProx();
+        }
+        return maior;
     }
 
     // ===================================================
@@ -229,6 +260,49 @@ public class ListaDuplamente {
                 pontFim = pontFim.getProx();
                 pontIni = pontIni.getProx();
             }
+        }
+    }
+
+    public void CountingSort() {
+        NoLista pontAux = this.inicio, pontFreq, pontOrdenada;
+        int tamanhoLista, pos;
+        ListaDuplamente listaFrequencia = new ListaDuplamente();
+        ListaDuplamente listaOrdenada = new ListaDuplamente();
+        listaOrdenada.copiaLista(this);
+        tamanhoLista = getMaiorElementoLista();
+        for(int i = 0; i < tamanhoLista; i++) 
+            listaFrequencia.inserirNoFinal(0);
+        while(pontAux != null) {
+            pontFreq = listaFrequencia.getInicio();
+            for(int i = 1; i < pontAux.getInfo(); i++) 
+                pontFreq = pontFreq.getProx();
+            pontFreq.setInfo(pontFreq.getInfo() + 1);
+            pontAux = pontAux.getProx();
+        }
+        pontFreq = listaFrequencia.getInicio().getProx();
+        while(pontFreq != null) {
+            pontFreq.setInfo(pontFreq.getAnt().getInfo() + pontFreq.getInfo());
+            pontFreq = pontFreq.getProx();
+        }
+        pontAux = this.inicio;
+        while(pontAux != null) {
+            pontFreq = listaFrequencia.getInicio();
+            for(int i = 1; i < pontAux.getInfo(); i++) 
+                pontFreq = pontFreq.getProx();
+            pos = pontFreq.getInfo();
+            pontFreq.setInfo(pontFreq.getInfo() - 1);
+            pontOrdenada = listaOrdenada.getInicio();
+            for(int i = 1; i < pos; i++) 
+                pontOrdenada = pontOrdenada.getProx();
+            pontOrdenada.setInfo(pontAux.getInfo());
+            pontAux = pontAux.getProx();
+        }
+        pontAux = inicio;
+        pontOrdenada = listaOrdenada.getInicio();
+        while(pontAux != null) {
+            pontAux.setInfo(pontOrdenada.getInfo());
+            pontAux = pontAux.getProx();
+            pontOrdenada = pontOrdenada.getProx();
         }
     }
 }
