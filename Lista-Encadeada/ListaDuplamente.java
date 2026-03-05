@@ -18,7 +18,7 @@ public class ListaDuplamente {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
+
     public NoLista getInicio() {
         return inicio;
     }
@@ -86,41 +86,48 @@ public class ListaDuplamente {
         System.out.println();
     }
 
-    public NoLista getMeioLista(NoLista inicioLista, NoLista fim) {
-        NoLista auxLista = inicioLista;
-        int contador = 0;
-        while (auxLista != null) {
-            auxLista = auxLista.getProx();
-            contador++;
+    public int contaQuantidadeLista(NoLista noInicio, NoLista noFim) {
+        int cont = 1;
+        while (noInicio != noFim) {
+            noInicio = noInicio.getProx();
+            cont++;
         }
-        contador = (int) contador / 2;
-        auxLista = inicioLista;
-        for (int i = 0; i < contador; i++)
+        return cont;
+    }
+
+    public NoLista getMeioLista(NoLista inicioLista, NoLista fimLista) {
+        NoLista auxLista = inicioLista;
+        int quant = contaQuantidadeLista(inicioLista, fimLista);
+        for (int i = 1; i < (quant * 10) / 20; i++)
             auxLista = auxLista.getProx();
         return auxLista;
     }
 
-    public NoLista buscaBinaria(int info, NoLista fim) {
-        NoLista ini = inicio, meio;
-        meio = getMeioLista(ini, fim);
-        while (ini.getInfo() < fim.getInfo() && info != meio.getInfo()) {
-            if (meio.getInfo() < info) {
-                ini = meio.getProx();
-            } else {
-                fim = meio;
-            }
-            meio = getMeioLista(ini, fim);
+    public NoLista buscaBinaria(NoLista noProcura) {
+        NoLista noIni = inicio, meio, noFim = noProcura.getAnt();
+        meio = getMeioLista(noIni, noFim);
+        while (noIni != noFim && noProcura.getInfo() != meio.getInfo()) {
+            if (meio.getInfo() < noProcura.getInfo())
+                noIni = meio.getProx();
+            else
+                noFim = meio;
+            if (noIni != noFim)
+                meio = getMeioLista(noIni, noFim);
         }
-        if (info == meio.getInfo())
-            return meio;
-        return null;
+        if (noIni == noFim) {
+            if (noIni.getInfo() >= noProcura.getInfo())
+                return noIni;
+            else
+                return noProcura;
+        }
+        return meio;
     }
 
     public int getMaiorElementoLista() {
         NoLista auxLista = inicio;
         int maior = 0;
-        while(auxLista != null) {
-            if(auxLista.getInfo() > maior) 
+        while (auxLista != null) {
+            if (auxLista.getInfo() > maior)
                 maior = auxLista.getInfo();
             auxLista = auxLista.getProx();
         }
@@ -128,7 +135,7 @@ public class ListaDuplamente {
     }
 
     // ===================================================
-    //              METODOS DE ORDENAÇÃO
+    // METODOS DE ORDENAÇÃO
     // ===================================================
 
     public void SelectionSort() {
@@ -173,16 +180,17 @@ public class ListaDuplamente {
 
     // NAO TERMINADO
     public void InsertionBinary() {
-        NoLista auxLista = inicio.getProx(), pos, auxJ;
+        NoLista auxLista = inicio.getProx(), pontI, pos;
         int aux;
         while (auxLista != null) {
+            pos = buscaBinaria(auxLista);
             aux = auxLista.getInfo();
-            pos = buscaBinaria(aux, auxLista);
-            if (pos != null) {
-                System.out.println("ACHOU: " + pos.getInfo());
-            } else {
-                System.out.println("NAO ACHOU");
+            pontI = auxLista;
+            while (pontI != pos) {
+                pontI.setInfo(pontI.getAnt().getInfo());
+                pontI = pontI.getAnt();
             }
+            pontI.setInfo(aux);
             auxLista = auxLista.getProx();
         }
 
@@ -192,11 +200,11 @@ public class ListaDuplamente {
         NoLista pontI, pontFim = fim;
         int aux;
         boolean troca = true;
-        while(pontFim != inicio && troca) { // pontFim.getAnt() != null
+        while (pontFim != inicio && troca) { // pontFim.getAnt() != null
             pontI = inicio;
             troca = false;
-            while(pontI != pontFim) {
-                if(pontI.getInfo() > pontI.getProx().getInfo()) {
+            while (pontI != pontFim) {
+                if (pontI.getInfo() > pontI.getProx().getInfo()) {
                     aux = pontI.getInfo();
                     pontI.setInfo(pontI.getProx().getInfo());
                     pontI.getProx().setInfo(aux);
@@ -212,11 +220,11 @@ public class ListaDuplamente {
         NoLista pontIni = inicio, pontFim = fim, pontAux;
         int aux;
         boolean troca = true;
-        while(pontIni != pontFim && troca) {
+        while (pontIni != pontFim && troca) {
             pontAux = pontIni;
             troca = false;
-            while(pontAux != pontFim) {
-                if(pontAux.getInfo() > pontAux.getProx().getInfo()) {
+            while (pontAux != pontFim) {
+                if (pontAux.getInfo() > pontAux.getProx().getInfo()) {
                     aux = pontAux.getInfo();
                     pontAux.setInfo(pontAux.getProx().getInfo());
                     pontAux.getProx().setInfo(aux);
@@ -225,11 +233,11 @@ public class ListaDuplamente {
                 pontAux = pontAux.getProx();
             }
             pontFim = pontFim.getAnt();
-            if(troca) {
+            if (troca) {
                 troca = false;
                 pontAux = pontFim;
-                while(pontAux != pontIni) {
-                    if(pontAux.getInfo() < pontAux.getAnt().getInfo()) {
+                while (pontAux != pontIni) {
+                    if (pontAux.getInfo() < pontAux.getAnt().getInfo()) {
                         aux = pontAux.getInfo();
                         pontAux.setInfo(pontAux.getAnt().getInfo());
                         pontAux.getAnt().setInfo(aux);
@@ -245,14 +253,14 @@ public class ListaDuplamente {
     public void CombSort() {
         int comb = getQuantidade(), aux;
         NoLista pontIni, pontFim;
-        while(comb > 0) {
+        while (comb > 0) {
             comb = comb * 10 / 13;
             pontIni = inicio;
             pontFim = pontIni.getProx();
-            for(int i = 0; i < comb; i++) 
+            for (int i = 0; i < comb; i++)
                 pontFim = pontFim.getProx();
-            while(pontFim != null) {
-                if(pontIni.getInfo() > pontFim.getInfo()) {
+            while (pontFim != null) {
+                if (pontIni.getInfo() > pontFim.getInfo()) {
                     aux = pontIni.getInfo();
                     pontIni.setInfo(pontFim.getInfo());
                     pontFim.setInfo(aux);
@@ -270,37 +278,37 @@ public class ListaDuplamente {
         ListaDuplamente listaOrdenada = new ListaDuplamente();
         listaOrdenada.copiaLista(this);
         tamanhoLista = getMaiorElementoLista();
-        for(int i = 0; i < tamanhoLista; i++) 
+        for (int i = 0; i < tamanhoLista; i++)
             listaFrequencia.inserirNoFinal(0);
-        while(pontAux != null) {
+        while (pontAux != null) {
             pontFreq = listaFrequencia.getInicio();
-            for(int i = 1; i < pontAux.getInfo(); i++) 
+            for (int i = 1; i < pontAux.getInfo(); i++)
                 pontFreq = pontFreq.getProx();
             pontFreq.setInfo(pontFreq.getInfo() + 1);
             pontAux = pontAux.getProx();
         }
         pontFreq = listaFrequencia.getInicio().getProx();
-        while(pontFreq != null) {
-            if(listaFrequencia.getQuantidade() > 1)
+        while (pontFreq != null) {
+            if (listaFrequencia.getQuantidade() > 1)
                 pontFreq.setInfo(pontFreq.getAnt().getInfo() + pontFreq.getInfo());
             pontFreq = pontFreq.getProx();
         }
         pontAux = this.inicio;
-        while(pontAux != null) {
+        while (pontAux != null) {
             pontFreq = listaFrequencia.getInicio();
-            for(int i = 1; i < pontAux.getInfo(); i++) 
+            for (int i = 1; i < pontAux.getInfo(); i++)
                 pontFreq = pontFreq.getProx();
             pos = pontFreq.getInfo();
             pontFreq.setInfo(pontFreq.getInfo() - 1);
             pontOrdenada = listaOrdenada.getInicio();
-            for(int i = 1; i < pos; i++) 
+            for (int i = 1; i < pos; i++)
                 pontOrdenada = pontOrdenada.getProx();
             pontOrdenada.setInfo(pontAux.getInfo());
             pontAux = pontAux.getProx();
         }
         pontAux = inicio;
         pontOrdenada = listaOrdenada.getInicio();
-        while(pontAux != null) {
+        while (pontAux != null) {
             pontAux.setInfo(pontOrdenada.getInfo());
             pontAux = pontAux.getProx();
             pontOrdenada = pontOrdenada.getProx();
