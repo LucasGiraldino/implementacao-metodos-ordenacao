@@ -178,7 +178,6 @@ public class ListaDuplamente {
         }
     }
 
-    // NAO TERMINADO
     public void InsertionBinary() {
         NoLista auxLista = inicio.getProx(), pontI, pos;
         int aux;
