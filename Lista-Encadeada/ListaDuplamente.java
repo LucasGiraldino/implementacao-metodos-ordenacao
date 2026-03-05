@@ -281,7 +281,8 @@ public class ListaDuplamente {
         }
         pontFreq = listaFrequencia.getInicio().getProx();
         while(pontFreq != null) {
-            pontFreq.setInfo(pontFreq.getAnt().getInfo() + pontFreq.getInfo());
+            if(listaFrequencia.getQuantidade() > 1)
+                pontFreq.setInfo(pontFreq.getAnt().getInfo() + pontFreq.getInfo());
             pontFreq = pontFreq.getProx();
         }
         pontAux = this.inicio;
