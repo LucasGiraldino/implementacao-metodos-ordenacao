@@ -9,7 +9,8 @@ public class main {
         ListaDuplamente lista7 = new ListaDuplamente();
         ListaDuplamente lista8 = new ListaDuplamente();
         ListaDuplamente lista9 = new ListaDuplamente();
-
+        ListaDuplamente lista10 = new ListaDuplamente();
+ 
         System.out.println("LISTA 1:");
         lista1.geraLista();
         lista1.imprimirLista();
@@ -23,6 +24,7 @@ public class main {
         lista7.copiaLista(lista1);
         lista8.copiaLista(lista1);
         lista9.copiaLista(lista1);
+        lista10.copiaLista(lista1);
 
         System.out.println("LISTA 2 SELECTION SORT:");
         lista2.SelectionSort();
@@ -64,8 +66,11 @@ public class main {
         lista9.imprimirLista();
         System.out.println("");
 
-        // System.out.println("MEIO:");
-        // lista3.InsertionBinary();
+        System.out.println("LISTA 10 RADIX SORT:");
+        lista10.RadixSort();
+        lista10.imprimirLista();
+        System.out.println("");
 
+        
     }
 }

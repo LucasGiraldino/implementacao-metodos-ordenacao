@@ -338,4 +338,39 @@ public class ListaDuplamente {
             }
         }
     }
+
+    public void RadixSort() {
+        int maior = getMaiorElementoLista(), mod = 10, div = 1, res;
+        NoLista auxLista, auxRadix;
+        ListaDuplamente listaAuxiliar[] = new ListaDuplamente[10];
+        ListaDuplamente listaRadix = new ListaDuplamente();
+        listaRadix.copiaLista(this);
+        while(maior > 0) {
+            auxRadix = listaRadix.getInicio();
+            while(auxRadix != null) {
+                res = (auxRadix.getInfo() % mod) / div;
+                if(listaAuxiliar[res] == null)
+                    listaAuxiliar[res] = new ListaDuplamente();
+                listaAuxiliar[res].inserirNoFinal(auxRadix.getInfo());
+                auxRadix = auxRadix.getProx();
+            }
+            auxRadix = listaRadix.getInicio();
+            for(int i = 0; i < 10; i++) {
+                if(listaAuxiliar[i] != null) {
+                    auxLista = listaAuxiliar[i].getInicio();
+                    while(auxLista != null) {
+                        auxRadix.setInfo(auxLista.getInfo());
+                        auxRadix = auxRadix.getProx();
+                        auxLista = auxLista.getProx();
+                    }
+                    listaAuxiliar[i] = null;
+                }
+            }
+            mod *= 10;
+            div *= 10;
+            maior /= 10;
+        }
+        setInicio(null);
+        copiaLista(listaRadix);
+    }
 }
