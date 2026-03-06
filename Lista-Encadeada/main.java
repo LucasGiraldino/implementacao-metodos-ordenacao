@@ -8,6 +8,7 @@ public class main {
         ListaDuplamente lista6 = new ListaDuplamente();
         ListaDuplamente lista7 = new ListaDuplamente();
         ListaDuplamente lista8 = new ListaDuplamente();
+        ListaDuplamente lista9 = new ListaDuplamente();
 
         System.out.println("LISTA 1:");
         lista1.geraLista();
@@ -21,6 +22,7 @@ public class main {
         lista6.copiaLista(lista1);
         lista7.copiaLista(lista1);
         lista8.copiaLista(lista1);
+        lista9.copiaLista(lista1);
 
         System.out.println("LISTA 2 SELECTION SORT:");
         lista2.SelectionSort();
@@ -55,6 +57,11 @@ public class main {
         System.out.println("LISTA 8 INSERÇÃO BINÁRIA:");
         lista8.InsertionBinary();
         lista8.imprimirLista();
+        System.out.println("");
+
+        System.out.println("LISTA 9 BUCKET SORT:");
+        lista9.BucketSort();
+        lista9.imprimirLista();
         System.out.println("");
 
         // System.out.println("MEIO:");

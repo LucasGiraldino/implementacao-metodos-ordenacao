@@ -38,7 +38,7 @@ public class ListaDuplamente {
     public void inicializaLista() {
         NoLista aux = inicio;
         for (int i = 0; i < quantidade; i++) {
-            aux.setInfo(0);
+            aux.setInfo(-1);
             aux = aux.getProx();
         }
     }
@@ -311,6 +311,31 @@ public class ListaDuplamente {
             pontAux.setInfo(pontOrdenada.getInfo());
             pontAux = pontAux.getProx();
             pontOrdenada = pontOrdenada.getProx();
+        }
+    }
+
+    public void BucketSort() {
+        int maior = getMaiorElementoLista(), bucketoNo;
+        NoLista auxLista = inicio, auxBucket;
+        ListaDuplamente listaBucket[] = new ListaDuplamente[quantidade];
+        while(auxLista != null) {
+            bucketoNo = (quantidade * auxLista.getInfo()) / (maior + 1);
+            if(listaBucket[bucketoNo] == null) 
+                listaBucket[bucketoNo] = new ListaDuplamente();
+            listaBucket[bucketoNo].inserirNoFinal(auxLista.getInfo());
+            auxLista = auxLista.getProx();
+        }
+        auxLista = inicio;
+        for(int i = 0; i < quantidade; i++) {
+            if(listaBucket[i] instanceof ListaDuplamente) {
+                listaBucket[i].InsertionSort();
+                auxBucket = listaBucket[i].getInicio();
+                while(auxBucket != null) {
+                    auxLista.setInfo(auxBucket.getInfo());
+                    auxBucket = auxBucket.getProx();
+                    auxLista = auxLista.getProx();
+                }
+            }
         }
     }
 }
