@@ -373,4 +373,26 @@ public class ListaDuplamente {
         setInicio(null);
         copiaLista(listaRadix);
     }
+
+    public void GnomeSort() {
+        NoLista auxLista = inicio.getProx(), marca;
+        int aux;
+        while(auxLista != null) {
+            if(auxLista.getInfo() < auxLista.getAnt().getInfo()) {
+                aux = auxLista.getInfo();
+                auxLista.setInfo(auxLista.getAnt().getInfo());
+                auxLista.getAnt().setInfo(aux);
+                marca = auxLista;
+                auxLista = auxLista.getAnt();
+                while(auxLista.getAnt() != null && auxLista.getInfo() < auxLista.getAnt().getInfo()) {
+                    aux = auxLista.getInfo();
+                    auxLista.setInfo(auxLista.getAnt().getInfo());
+                    auxLista.getAnt().setInfo(aux);
+                    auxLista = auxLista.getAnt();
+                }
+                auxLista = marca;
+            }
+            auxLista = auxLista.getProx();
+        }
+    }
 }
