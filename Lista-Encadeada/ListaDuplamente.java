@@ -419,7 +419,8 @@ public class ListaDuplamente {
                     auxPrincipal.setProx(listasParciais[i+1].getInicio());
                     listasParciais[i].SelectionSort();
                     for(int j = i+1; j < pos; j++) 
-                        listasParciais[j] = listasParciais[j+1];
+                        if(j+1 < pos)
+                            listasParciais[j] = listasParciais[j+1];
                     pos--;
                 }
             }
