@@ -395,4 +395,36 @@ public class ListaDuplamente {
             auxLista = auxLista.getProx();
         }
     }
+
+    public void TimSort() {
+        ListaDuplamente listasParciais[] = new ListaDuplamente[quantidade];
+        NoLista auxPrincipal = inicio;
+        int pos = 0;
+        while(auxPrincipal != null) {
+            listasParciais[pos] = new ListaDuplamente();
+            listasParciais[pos].inserirNoFinal(auxPrincipal.getInfo());
+            while(auxPrincipal.getProx() != null && auxPrincipal.getInfo() < auxPrincipal.getProx().getInfo()) {
+                listasParciais[pos].inserirNoFinal(auxPrincipal.getProx().getInfo());
+                auxPrincipal = auxPrincipal.getProx();
+            }
+            pos++;
+            auxPrincipal = auxPrincipal.getProx();;
+        }
+        while(pos > 1) {
+            for(int i = 0; i < pos; i++) {
+                if((i+1) < pos) {
+                    auxPrincipal = listasParciais[i].getInicio();
+                    while(auxPrincipal.getProx() != null)
+                        auxPrincipal = auxPrincipal.getProx();
+                    auxPrincipal.setProx(listasParciais[i+1].getInicio());
+                    listasParciais[i].SelectionSort();
+                    for(int j = i+1; j < pos; j++) 
+                        listasParciais[j] = listasParciais[j+1];
+                    pos--;
+                }
+            }
+        }
+        setInicio(null);
+        copiaLista(listasParciais[0]);
+    }
 }
