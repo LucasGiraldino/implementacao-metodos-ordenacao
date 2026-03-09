@@ -428,4 +428,24 @@ public class ListaDuplamente {
         setInicio(null);
         copiaLista(listasParciais[0]);
     }
+
+    public void ShellSort() {
+        int intervalo = quantidade * 10 / 20, aux;
+        NoLista auxPrincipal, auxI;
+        while(intervalo > 0) {
+            auxPrincipal = auxI = inicio;
+            for(int i = 1; i < intervalo; i++)
+                auxI = auxI.getProx();
+            while(auxI != null && auxPrincipal != null) {
+                if(auxPrincipal.getInfo() > auxI.getInfo()) {
+                    aux = auxI.getInfo();
+                    auxI.setInfo(auxPrincipal.getInfo());
+                    auxPrincipal.setInfo(aux);
+                }
+                auxI = auxI.getProx();
+                auxPrincipal = auxPrincipal.getProx();
+            }
+            intervalo = intervalo * 10 / 20;
+        }
+    }
 }

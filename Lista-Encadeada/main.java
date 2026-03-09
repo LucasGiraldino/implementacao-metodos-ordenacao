@@ -12,6 +12,7 @@ public class main {
         ListaDuplamente lista10 = new ListaDuplamente();
         ListaDuplamente lista11 = new ListaDuplamente();
         ListaDuplamente lista12 = new ListaDuplamente();
+        ListaDuplamente lista13 = new ListaDuplamente();
  
         System.out.println("LISTA 1:");
         lista1.geraLista();
@@ -29,6 +30,7 @@ public class main {
         lista10.copiaLista(lista1);
         lista11.copiaLista(lista1);
         lista12.copiaLista(lista1);
+        lista13.copiaLista(lista1);
 
         System.out.println("LISTA 2 SELECTION SORT:");
         lista2.SelectionSort();
@@ -84,6 +86,12 @@ public class main {
         lista12.TimSort();
         lista12.imprimirLista();
         System.out.println("");
+
+        System.out.println("LISTA 13 SHELL SORT:");
+        lista13.ShellSort();
+        lista13.imprimirLista();
+        System.out.println("");
+
 
         
     }
