@@ -408,7 +408,7 @@ public class ListaDuplamente {
                 auxPrincipal = auxPrincipal.getProx();
             }
             pos++;
-            auxPrincipal = auxPrincipal.getProx();;
+            auxPrincipal = auxPrincipal.getProx();
         }
         while(pos > 1) {
             for(int i = 0; i < pos; i++) {
