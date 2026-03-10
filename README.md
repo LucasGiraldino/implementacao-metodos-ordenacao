@@ -3,3 +3,4 @@ Atividade Prática de Implementação: Métodos de Ordenação - Pesquisa e Orde
 
 # run 
 java ./Lista-Encadeada/main.java
+java ./Ordenacao-Arquivo-Binario/main.java

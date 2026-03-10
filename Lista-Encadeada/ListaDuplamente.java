@@ -398,8 +398,8 @@ public class ListaDuplamente {
 
     public void TimSort() {
         ListaDuplamente listasParciais[] = new ListaDuplamente[quantidade];
-        NoLista auxPrincipal = inicio;
-        int pos = 0;
+        NoLista auxPrincipal = inicio, auxLista, auxI, auxJ;
+        int pos = 0, info;
         while(auxPrincipal != null) {
             listasParciais[pos] = new ListaDuplamente();
             listasParciais[pos].inserirNoFinal(auxPrincipal.getInfo());
@@ -417,7 +417,22 @@ public class ListaDuplamente {
                     while(auxPrincipal.getProx() != null)
                         auxPrincipal = auxPrincipal.getProx();
                     auxPrincipal.setProx(listasParciais[i+1].getInicio());
-                    listasParciais[i].SelectionSort();
+                    if(listasParciais[i].getQuantidade() > 1) {
+                        auxLista = listasParciais[i].getInicio();
+                        while(auxLista != null) {
+                            auxI = auxLista;
+                            auxJ = auxLista.getAnt();
+                            while(auxJ != null && auxI.getInfo() < auxJ.getInfo()) {
+                                info = auxJ.getInfo();
+                                auxJ.setInfo(auxI.getInfo());
+                                auxI.setInfo(info);
+    
+                                auxI = auxI.getAnt();
+                                auxJ = auxJ.getAnt();
+                            }
+                            auxLista = auxLista.getProx();
+                        }
+                    }
                     for(int j = i+1; j < pos; j++) 
                         if(j+1 < pos)
                             listasParciais[j] = listasParciais[j+1];
@@ -434,7 +449,7 @@ public class ListaDuplamente {
         NoLista auxPrincipal, auxI;
         while(intervalo > 0) {
             auxPrincipal = auxI = inicio;
-            for(int i = 1; i < intervalo; i++)
+            for(int i = 0; i < intervalo; i++)
                 auxI = auxI.getProx();
             while(auxI != null && auxPrincipal != null) {
                 if(auxPrincipal.getInfo() > auxI.getInfo()) {
@@ -446,6 +461,41 @@ public class ListaDuplamente {
                 auxPrincipal = auxPrincipal.getProx();
             }
             intervalo = intervalo * 10 / 20;
+        }
+    }
+
+    public void HeapSort() {
+        int TL = quantidade, aux, posPai, pos;
+        NoLista filho1, filho2, pai, maioFilho, NoAux;
+        while(TL > 1) {
+            posPai = TL/2-1;
+            pai = inicio;
+            for(int i = 0; i < posPai; i++) 
+                pai = pai.getProx();
+            while(pai != null) {
+                filho1 = pai;
+                pos = posPai * 2 + 1;
+                for(int i = posPai; i < pos; i++)
+                    filho1 = filho1.getProx();
+                filho2 = filho1.getProx();
+                maioFilho = filho1;
+                if(pos+1 < TL && filho2.getInfo() > filho1.getInfo())
+                    maioFilho = filho2;
+                if(maioFilho.getInfo() > pai.getInfo()) {
+                    aux = maioFilho.getInfo();
+                    maioFilho.setInfo(pai.getInfo());
+                    pai.setInfo(aux);
+                }
+                pai = pai.getAnt();
+                posPai--;
+            }
+            NoAux = fim;
+            for(int i = quantidade; i > TL; i--) 
+                NoAux = NoAux.getAnt();
+            aux = inicio.getInfo();
+            inicio.setInfo(NoAux.getInfo());
+            NoAux.setInfo(aux);
+            TL--;
         }
     }
 }
