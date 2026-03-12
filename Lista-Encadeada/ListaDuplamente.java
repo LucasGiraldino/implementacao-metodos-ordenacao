@@ -57,6 +57,16 @@ public class ListaDuplamente {
         quantidade++;
     }
 
+    public NoLista posicionaPonteiro(int posicao) {
+        NoLista aux = inicio;
+        if(posicao < quantidade) {
+            for(int i = 0; i < posicao; i++)
+                aux = aux.getProx();
+            return aux;
+        }
+        return null;
+    }
+
     public void geraLista() {
         int numero;
         for (int i = 0; i < 50; i++) {
@@ -445,22 +455,33 @@ public class ListaDuplamente {
     }
 
     public void ShellSort() {
-        int intervalo = quantidade * 10 / 20, aux;
+        int intervalo = 1, aux, posicaoI, posAux;
         NoLista auxPrincipal, auxI;
+        boolean flag;
+        while(intervalo < quantidade)
+            intervalo = intervalo * 3 + 1;
+        intervalo /= 3;
         while(intervalo > 0) {
-            auxPrincipal = auxI = inicio;
-            for(int i = 0; i < intervalo; i++)
-                auxI = auxI.getProx();
-            while(auxI != null && auxPrincipal != null) {
-                if(auxPrincipal.getInfo() > auxI.getInfo()) {
-                    aux = auxI.getInfo();
-                    auxI.setInfo(auxPrincipal.getInfo());
-                    auxPrincipal.setInfo(aux);
+            posicaoI = intervalo;
+            while(posicaoI < quantidade) {
+                auxPrincipal = posicionaPonteiro(posicaoI);
+                aux = auxPrincipal.getInfo();
+                posAux = posicaoI;
+                flag = true;
+                while(posAux >= intervalo && flag) {
+                    auxI = posicionaPonteiro(posAux-intervalo);
+                    flag = false;
+                    if(aux < auxI.getInfo()) {
+                        auxPrincipal.setInfo(auxI.getInfo());
+                        posAux = posAux - intervalo;
+                        auxPrincipal = posicionaPonteiro(posAux);
+                        flag = true;
+                    }
                 }
-                auxI = auxI.getProx();
-                auxPrincipal = auxPrincipal.getProx();
+                auxPrincipal.setInfo(aux);
+                posicaoI++;
             }
-            intervalo = intervalo * 10 / 20;
+            intervalo /= 3;
         }
     }
 
