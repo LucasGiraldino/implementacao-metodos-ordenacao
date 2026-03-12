@@ -473,7 +473,7 @@ public class ListaDuplamente {
                     flag = false;
                     if(aux < auxI.getInfo()) {
                         auxPrincipal.setInfo(auxI.getInfo());
-                        posAux = posAux - intervalo;
+                        posAux -= intervalo;
                         auxPrincipal = posicionaPonteiro(posAux);
                         flag = true;
                     }
