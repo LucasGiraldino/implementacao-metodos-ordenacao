@@ -290,9 +290,7 @@ public class ListaDuplamente {
         for (int i = 0; i < tamanhoLista; i++)
             listaFrequencia.inserirNoFinal(0);
         while (pontAux != null) {
-            pontFreq = listaFrequencia.getInicio();
-            for (int i = 1; i < pontAux.getInfo(); i++)
-                pontFreq = pontFreq.getProx();
+            pontFreq = listaFrequencia.posicionaPonteiro(pontAux.getInfo() - 1);
             pontFreq.setInfo(pontFreq.getInfo() + 1);
             pontAux = pontAux.getProx();
         }
@@ -304,14 +302,10 @@ public class ListaDuplamente {
         }
         pontAux = this.inicio;
         while (pontAux != null) {
-            pontFreq = listaFrequencia.getInicio();
-            for (int i = 1; i < pontAux.getInfo(); i++)
-                pontFreq = pontFreq.getProx();
+            pontFreq = listaFrequencia.posicionaPonteiro(pontAux.getInfo() - 1);
             pos = pontFreq.getInfo();
             pontFreq.setInfo(pontFreq.getInfo() - 1);
-            pontOrdenada = listaOrdenada.getInicio();
-            for (int i = 1; i < pos; i++)
-                pontOrdenada = pontOrdenada.getProx();
+            pontOrdenada = listaOrdenada.posicionaPonteiro(pos - 1);
             pontOrdenada.setInfo(pontAux.getInfo());
             pontAux = pontAux.getProx();
         }
@@ -427,21 +421,20 @@ public class ListaDuplamente {
                     while(auxPrincipal.getProx() != null)
                         auxPrincipal = auxPrincipal.getProx();
                     auxPrincipal.setProx(listasParciais[i+1].getInicio());
-                    if(listasParciais[i].getQuantidade() > 1) {
-                        auxLista = listasParciais[i].getInicio();
-                        while(auxLista != null) {
-                            auxI = auxLista;
-                            auxJ = auxLista.getAnt();
-                            while(auxJ != null && auxI.getInfo() < auxJ.getInfo()) {
-                                info = auxJ.getInfo();
-                                auxJ.setInfo(auxI.getInfo());
-                                auxI.setInfo(info);
-    
-                                auxI = auxI.getAnt();
-                                auxJ = auxJ.getAnt();
-                            }
-                            auxLista = auxLista.getProx();
+                    auxPrincipal.getProx().setAnt(auxPrincipal);
+                    auxLista = listasParciais[i].getInicio();
+                    while(auxLista != null) {
+                        auxI = auxLista.getProx();
+                        auxJ = auxLista;
+                        while(auxJ != null && auxI != null && auxI.getInfo() < auxJ.getInfo()) {
+                            info = auxJ.getInfo();
+                            auxJ.setInfo(auxI.getInfo());
+                            auxI.setInfo(info);
+
+                            auxI = auxI.getAnt();
+                            auxJ = auxJ.getAnt();
                         }
+                        auxLista = auxLista.getProx();
                     }
                     for(int j = i+1; j < pos; j++) 
                         if(j+1 < pos)
@@ -490,14 +483,10 @@ public class ListaDuplamente {
         NoLista filho1, filho2, pai, maioFilho, NoAux;
         while(TL > 1) {
             posPai = TL/2-1;
-            pai = inicio;
-            for(int i = 0; i < posPai; i++) 
-                pai = pai.getProx();
+            pai = posicionaPonteiro(posPai);
             while(pai != null) {
-                filho1 = pai;
                 pos = posPai * 2 + 1;
-                for(int i = posPai; i < pos; i++)
-                    filho1 = filho1.getProx();
+                filho1 = posicionaPonteiro(pos);
                 filho2 = filho1.getProx();
                 maioFilho = filho1;
                 if(pos+1 < TL && filho2.getInfo() > filho1.getInfo())
@@ -510,9 +499,7 @@ public class ListaDuplamente {
                 pai = pai.getAnt();
                 posPai--;
             }
-            NoAux = fim;
-            for(int i = quantidade; i > TL; i--) 
-                NoAux = NoAux.getAnt();
+            NoAux = posicionaPonteiro(TL-1);
             aux = inicio.getInfo();
             inicio.setInfo(NoAux.getInfo());
             NoAux.setInfo(aux);

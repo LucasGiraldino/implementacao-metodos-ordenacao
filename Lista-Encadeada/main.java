@@ -59,10 +59,10 @@ public class main {
         // lista6.imprimirLista();
         // System.out.println("");
 
-        // System.out.println("LISTA 7 COUTING SORT:");
-        // lista7.CountingSort();
-        // lista7.imprimirLista();
-        // System.out.println("");
+        System.out.println("LISTA 7 COUTING SORT:");
+        lista7.CountingSort();
+        lista7.imprimirLista();
+        System.out.println("");
 
         // System.out.println("LISTA 8 INSERÇÃO BINÁRIA:");
         // lista8.InsertionBinary();
@@ -84,19 +84,19 @@ public class main {
         // lista11.imprimirLista();
         // System.out.println("");
 
-        // System.out.println("LISTA 12 TIM SORT:");
-        // lista12.TimSort();
-        // lista12.imprimirLista();
-        // System.out.println("");
+        System.out.println("LISTA 12 TIM SORT:");
+        lista12.TimSort();
+        lista12.imprimirLista();
+        System.out.println("");
 
         System.out.println("LISTA 13 SHELL SORT:");
         lista13.ShellSort();
         lista13.imprimirLista();
         System.out.println("");
 
-        // System.out.println("LISTA 14 HEAP SORT:");
-        // lista14.HeapSort();
-        // lista14.imprimirLista();
-        // System.out.println("");
+        System.out.println("LISTA 14 HEAP SORT:");
+        lista14.HeapSort();
+        lista14.imprimirLista();
+        System.out.println("");
     }
 }
