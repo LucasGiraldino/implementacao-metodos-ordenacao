@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
 
-//... classe Arquivo (onde vai estar o m�todo para ordernar, etc) ....
 public class ArquivoJava {
     private String nomeArquivo;
     private RandomAccessFile arquivo;
@@ -88,7 +87,6 @@ public class ArquivoJava {
         return (retorno);
     }
 
-    // insere um Registro no final do arquivo, passado por par�metro
     public void inserirRegNoFinal(Registro reg) {
         seekArq(filesize());// ultimo byte
         reg.gravaNoArq(arquivo);
@@ -291,5 +289,38 @@ public class ArquivoJava {
             registroGravar.gravaNoArq(arquivo);
         }
     }
+
+    public void BubbleSort() {
+        int aux;
+        Registro regI = new Registro(), regJ = new Registro();
+        boolean flag = true;
+        for (int TL = filesize(); TL > 0 && flag; TL--) {
+            flag = false;
+            for(int i = 0; i < TL; i++) {
+                seekArq(i);
+                regI.leDoArq(arquivo);
+                regJ.leDoArq(arquivo);
+                addComp();
+                if(regI.getNumero() > regJ.getNumero()) {
+                    aux = regI.getNumero();
+                    regI.setNumero(regJ.getNumero());
+                    regJ.setNumero(aux);
+                    addMov();
+                    seekArq(i);
+                    regI.gravaNoArq(arquivo);
+                    regJ.gravaNoArq(arquivo);
+                    flag = true;
+                }
+            }
+        }
+    }
+
+    // public void CombSort() {
+    //     int comb = filesize(), aux, posicaoI;
+    //     while(comb > 0) {
+    //         comb = comb * 10 / 13;
+    //         for(int i = 0; i < comb; i++) 
+    //     }
+    // }
 
 }

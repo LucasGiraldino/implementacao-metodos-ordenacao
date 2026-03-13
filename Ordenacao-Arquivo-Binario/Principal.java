@@ -213,20 +213,93 @@ public class Principal {
         // // System.out.println(calculaCompInsDirRand(auxArqRand.filesize()));
         // System.out.println("");
 
+        // // ==========================================
+        // // INSERÇÃO BINÁRIA
+        // // ==========================================
+
+        // // ARQUIVO ORDENADO
+        // System.out.println("==========================================");
+        // System.out.println("INSERÇÃO BINÁRIA");
+        // System.out.println("==========================================");
+        // arquivoOrdenado.initComp();
+        // arquivoOrdenado.initMov();  
+        // arquivoOrdenado.exibirArq();
+        // System.out.println("");
+        // tempoInicio = System.currentTimeMillis();
+        // arquivoOrdenado.InsertionBinary();
+        // tempoFim = System.currentTimeMillis();
+        // quantidadeCompOrd = arquivoOrdenado.getComp();
+        // quantidadeMovOrd = arquivoOrdenado.getMov();
+        // tempoTotalOrd = tempoFim - tempoInicio;
+        // System.out.println("QUANTIDADE DE COMPARACOES: " + quantidadeCompOrd);
+        // System.out.println("QUANTIDADE DE MOVIMENTACOES: " + quantidadeMovOrd);
+        // System.out.println("TEMPO INICIAL: " + tempoInicio);
+        // System.out.println("TEMPO FIM: " + tempoFim);
+        // System.out.println("TEMPO TOTAL: " + tempoTotalOrd);
+        // arquivoOrdenado.exibirArq();
+        // System.out.println("");
+        // // System.out.println(calculaCompInsDirOrd(arquivoOrdenado.filesize()));
+
+        // // ARQUIVO REVERSO
+        // auxArqReverso.truncate(0);
+        // auxArqReverso.copiaArquivo(arquivoReverso.getFile());
+        // auxArqReverso.initComp();
+        // auxArqReverso.initMov();
+        // auxArqReverso.exibirArq();
+        // System.out.println("");
+        // tempoInicio = System.currentTimeMillis();
+        // auxArqReverso.InsertionBinary();
+        // tempoFim = System.currentTimeMillis();
+        // quantidadeCompRev = auxArqReverso.getComp();
+        // quantidadeMovRev = auxArqReverso.getMov();
+        // tempoTotalRev = tempoFim - tempoInicio;
+        // System.out.println("QUANTIDADE DE COMPARACOES: " + quantidadeCompRev);
+        // System.out.println("QUANTIDADE DE MOVIMENTACOES: " + quantidadeMovRev);
+        // System.out.println("TEMPO INICIAL: " + tempoInicio);
+        // System.out.println("TEMPO FIM: " + tempoFim);
+        // System.out.println("TEMPO TOTAL: " + tempoTotalRev);
+        // auxArqReverso.exibirArq();
+        // System.out.println("");
+        // // System.out.println(calculaCompInsDirRev(auxArqReverso.filesize()));
+        // System.out.println("");
+
+        // // ARQUIVO RANDOMICO
+        // auxArqRand.truncate(0);
+        // auxArqRand.copiaArquivo(arquivoRandomico.getFile());
+        // auxArqRand.exibirArq();
+        // System.out.println("");
+        // auxArqRand.initComp();
+        // auxArqRand.initMov();
+        // tempoInicio = System.currentTimeMillis();
+        // auxArqRand.InsertionBinary();
+        // tempoFim = System.currentTimeMillis();
+        // quantidadeCompRand = auxArqRand.getComp();
+        // quantidadeMovRand = auxArqRand.getMov();
+        // tempoTotalRand = tempoFim - tempoInicio;
+        // System.out.println("QUANTIDADE DE COMPARACOES: " + quantidadeCompRand);
+        // System.out.println("QUANTIDADE DE MOVIMENTACOES: " + quantidadeMovRand);
+        // System.out.println("TEMPO INICIAL: " + tempoInicio);
+        // System.out.println("TEMPO FIM: " + tempoFim);
+        // System.out.println("TEMPO TOTAL: " + tempoTotalRand);
+        // auxArqRand.exibirArq();
+        // System.out.println("");
+        // // System.out.println(calculaCompInsDirRand(auxArqRand.filesize()));
+        // System.out.println("");
+
         // ==========================================
-        // INSERÇÃO BINÁRIA
+        // BUBBLE SORTE
         // ==========================================
 
         // ARQUIVO ORDENADO
         System.out.println("==========================================");
-        System.out.println("INSERÇÃO BINÁRIA");
+        System.out.println("BUBBLE SORTE");
         System.out.println("==========================================");
         arquivoOrdenado.initComp();
         arquivoOrdenado.initMov();  
         arquivoOrdenado.exibirArq();
         System.out.println("");
         tempoInicio = System.currentTimeMillis();
-        arquivoOrdenado.InsertionBinary();
+        arquivoOrdenado.BubbleSort();
         tempoFim = System.currentTimeMillis();
         quantidadeCompOrd = arquivoOrdenado.getComp();
         quantidadeMovOrd = arquivoOrdenado.getMov();
@@ -248,7 +321,7 @@ public class Principal {
         auxArqReverso.exibirArq();
         System.out.println("");
         tempoInicio = System.currentTimeMillis();
-        auxArqReverso.InsertionBinary();
+        auxArqReverso.BubbleSort();
         tempoFim = System.currentTimeMillis();
         quantidadeCompRev = auxArqReverso.getComp();
         quantidadeMovRev = auxArqReverso.getMov();
@@ -271,7 +344,7 @@ public class Principal {
         auxArqRand.initComp();
         auxArqRand.initMov();
         tempoInicio = System.currentTimeMillis();
-        auxArqRand.InsertionBinary();
+        auxArqRand.BubbleSort();
         tempoFim = System.currentTimeMillis();
         quantidadeCompRand = auxArqRand.getComp();
         quantidadeMovRand = auxArqRand.getMov();
