@@ -20,6 +20,14 @@ public class ArquivoJava {
         return mov;
     }
 
+    public void setComp(int comp) {
+        this.comp = comp;
+    }
+
+    public void setMov(int mov) {
+        this.mov = mov;
+    }
+
     public String getNomeArquivo() {
         return nomeArquivo;
     }
@@ -36,6 +44,14 @@ public class ArquivoJava {
         this.comp = 0;
     }
 
+    public void addComp() {
+        this.comp = this.comp + 1;
+    }
+
+    public void addMov() {
+        this.mov = this.mov + 2;
+    }
+
     public void InsertionSort() {
         Registro registroI = new Registro(), registroJ = new Registro();
         int posicao, aux;
@@ -46,6 +62,7 @@ public class ArquivoJava {
             seekArq(i - 1);   
             registroJ.leDoArq(arquivo);
             posicao = i;
+            addComp();
             while(posicao > 0 && registroI.getNumero() < registroJ.getNumero()) {
                 aux = registroJ.getNumero();
                 registroJ.setNumero(registroI.getNumero());
@@ -54,6 +71,7 @@ public class ArquivoJava {
                 registroI.gravaNoArq(arquivo);
                 seekArq(posicao - 1);
                 registroJ.gravaNoArq(arquivo);
+                addMov();
                 posicao--;
 
                 if(posicao > 0) {
@@ -61,8 +79,40 @@ public class ArquivoJava {
                     registroI.leDoArq(arquivo);
                     seekArq(posicao - 1);
                     registroJ.leDoArq(arquivo);
+                    addComp();
                 }
 
+            }
+        }
+    }
+
+    public void SelectionSort() {
+        Registro registorI = new Registro(), registroJ = new Registro();
+        int posMenor, infoMenor;
+
+        for (int i = 0; i < filesize()-1; i++) {
+            seekArq(i);
+            registorI.leDoArq(arquivo);
+            infoMenor = registorI.getNumero();
+            posMenor = i;
+            for(int j = i+1; j < filesize(); j++) {
+                seekArq(j);
+                registroJ.leDoArq(arquivo);
+                addComp();
+                if(registroJ.getNumero() < infoMenor) {
+                    infoMenor = registroJ.getNumero();
+                    posMenor = j;
+                }
+            }
+            // addComp();
+            if(registorI.getNumero() != infoMenor) {
+                seekArq(posMenor);
+                registroJ.leDoArq(arquivo);
+                seekArq(posMenor);
+                registorI.gravaNoArq(arquivo);
+                seekArq(i);
+                registroJ.gravaNoArq(arquivo);
+                addMov();
             }
         }
     }
@@ -81,7 +131,7 @@ public class ArquivoJava {
                 reg.leDoArq(arquivoOrigem);
                 reg.gravaNoArq(arquivo);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
     }
 
