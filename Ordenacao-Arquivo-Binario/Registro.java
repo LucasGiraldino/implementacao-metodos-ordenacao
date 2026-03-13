@@ -2,9 +2,8 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class Registro
-{
-    public final int tf = 1024;
+public class Registro {
+    public final int tf = 1022;
     private int numero;
     private char lixo[] = new char[tf];
 
@@ -20,6 +19,12 @@ public class Registro
     public int getNumero() {
         return (numero);
     }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    
 
     public String getNome() {
         String Snome = new String(lixo);
