@@ -60,6 +60,7 @@ public class ArquivoJava {
 
     public void copiaArquivo(RandomAccessFile arquivoOrigem) {
         try {
+            arquivoOrigem.seek(0);
             Registro reg = new Registro();
             while (arquivoOrigem.getFilePointer() < arquivoOrigem.length()) {
                 reg.leDoArq(arquivoOrigem);
@@ -296,12 +297,12 @@ public class ArquivoJava {
         boolean flag = true;
         for (int TL = filesize(); TL > 0 && flag; TL--) {
             flag = false;
-            for(int i = 0; i < TL; i++) {
+            for (int i = 0; i < TL; i++) {
                 seekArq(i);
                 regI.leDoArq(arquivo);
                 regJ.leDoArq(arquivo);
                 addComp();
-                if(regI.getNumero() > regJ.getNumero()) {
+                if (regI.getNumero() > regJ.getNumero()) {
                     aux = regI.getNumero();
                     regI.setNumero(regJ.getNumero());
                     regJ.setNumero(aux);
@@ -316,11 +317,11 @@ public class ArquivoJava {
     }
 
     // public void CombSort() {
-    //     int comb = filesize(), aux, posicaoI;
-    //     while(comb > 0) {
-    //         comb = comb * 10 / 13;
-    //         for(int i = 0; i < comb; i++) 
-    //     }
+    // int comb = filesize(), aux, posicaoI;
+    // while(comb > 0) {
+    // comb = comb * 10 / 13;
+    // for(int i = 0; i < comb; i++)
+    // }
     // }
 
 }
