@@ -316,12 +316,32 @@ public class ArquivoJava {
         }
     }
 
-    // public void CombSort() {
-    // int comb = filesize(), aux, posicaoI;
-    // while(comb > 0) {
-    // comb = comb * 10 / 13;
-    // for(int i = 0; i < comb; i++)
-    // }
-    // }
+    public void CombSort() {
+        Registro registroFim = new Registro(), registroInicio = new Registro();
+        int comb = filesize(), aux, TL = filesize();
+
+        while(comb > 0) {
+            comb = comb * 10 / 13;
+            for(int i = comb, j = 0; i <= TL ; i++, j++) {
+                seekArq(i);
+                registroFim.leDoArq(arquivo);
+                seekArq(j);
+                registroInicio.leDoArq(arquivo);
+                addComp();
+                if(registroInicio.getNumero() > registroFim.getNumero()) {
+                    aux = registroInicio.getNumero();
+                    registroInicio.setNumero(registroFim.getNumero());
+                    registroFim.setNumero(aux);
+
+                    seekArq(i);
+                    registroFim.gravaNoArq(arquivo);
+                    seekArq(j);
+                    registroInicio.gravaNoArq(arquivo);
+
+                    addMov();
+                }
+            }
+        }
+    }
 
 }
