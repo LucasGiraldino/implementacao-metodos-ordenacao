@@ -344,4 +344,56 @@ public class ArquivoJava {
         }
     }
 
+    public void ShakeSort() {
+        boolean flag = true;
+        int inicio = 0, fim = filesize(), aux;
+        Registro registroAux = new Registro(), registroProx = new Registro();
+
+        while(inicio < fim && flag) {
+            flag = false;
+            for(int i = inicio; i < fim; i++) {
+                seekArq(i);
+                registroAux.leDoArq(arquivo);
+                registroProx.leDoArq(arquivo);
+                addComp();
+                if(registroAux.getNumero() > registroProx.getNumero()) {
+                    aux = registroAux.getNumero();
+                    registroAux.setNumero(registroProx.getNumero());
+                    registroProx.setNumero(aux);
+
+                    flag = true;
+                    seekArq(i);
+                    registroAux.gravaNoArq(arquivo);
+                    registroProx.gravaNoArq(arquivo);
+                    addMov();
+                }
+            }
+            fim--;
+            if(flag) {
+                flag = false;
+                for(int i = fim; i > inicio; i--) {
+                    seekArq(i);
+                    registroAux.leDoArq(arquivo);
+                    seekArq(i-1);
+                    registroProx.leDoArq(arquivo);
+                    addComp();
+                    if(registroAux.getNumero() < registroProx.getNumero()) {
+                        aux = registroAux.getNumero();
+                        registroAux.setNumero(registroProx.getNumero());
+                        registroProx.setNumero(aux);
+
+                        seekArq(i);
+                        registroAux.gravaNoArq(arquivo);
+                        seekArq(i-1);
+                        registroProx.gravaNoArq(arquivo);
+                        flag = true;
+
+                        addMov();
+                    }
+                }
+                inicio++;
+            }
+        }   
+    }
+
 }
