@@ -432,4 +432,47 @@ public class ArquivoJava {
         }
     }
 
+    public void QuickSortSemPivo() {
+        QuickSP(0, filesize());
+    }
+
+    public void QuickSP(int ini, int fim) {
+        int aux, auxIni = ini, auxFim = fim;
+        boolean flag = true;
+        Registro regIni = new Registro(), regFim = new Registro();
+        while(auxIni < auxFim) {
+            seekArq(auxIni);
+            regIni.leDoArq(arquivo);
+            seekArq(auxFim);
+            regFim.leDoArq(arquivo);
+            if(flag)
+                while(auxIni < auxFim && regIni.getNumero() <= regFim.getNumero()) {
+                    addComp();
+                    auxIni++;
+                    seekArq(auxIni);
+                    regIni.leDoArq(arquivo);
+                }
+            else 
+                while(auxIni < auxFim && regFim.getNumero() >= regIni.getNumero()) {
+                    addComp();
+                    auxFim--;
+                    seekArq(auxFim);
+                    regFim.leDoArq(arquivo);
+                }
+            aux = regIni.getNumero();
+            regIni.setNumero(regFim.getNumero());
+            regFim.setNumero(aux);
+
+            seekArq(auxIni);
+            regIni.gravaNoArq(arquivo);
+            seekArq(auxFim);
+            regFim.gravaNoArq(arquivo);
+            addMov();
+        }
+        if(ini < auxIni - 1)
+            QuickSP(ini, auxIni-1);
+        if(auxFim+1 < fim)
+            QuickSP(auxFim+1, fim);
+    }
+
 }
