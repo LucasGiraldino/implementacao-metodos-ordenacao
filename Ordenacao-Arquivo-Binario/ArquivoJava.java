@@ -432,6 +432,57 @@ public class ArquivoJava {
         }
     }
 
+    public void HeapSort() {
+        int TL = filesize(), posPai, pos, maior, aux, posMaior;
+        Registro regPai = new Registro(), regFilho1 = new Registro(), regFilho2 = new Registro();
+
+        while(TL > 1) { 
+            posPai = TL/2 -1;
+            while(posPai >= 0) {
+                seekArq(posPai);
+                regPai.leDoArq(arquivo);
+                pos = posPai * 2 + 1;
+                seekArq(pos);
+                regFilho1.leDoArq(arquivo);
+                maior = regFilho1.getNumero();
+                posMaior = pos;
+                if(pos+1 < TL) {
+                    seekArq(pos+1);
+                    regFilho2.leDoArq(arquivo);
+                    addComp();
+                    if(regFilho2.getNumero() > regFilho1.getNumero()) {
+                        maior = regFilho2.getNumero();
+                        posMaior = pos+1;
+                    }
+                }
+                addComp();
+                if(maior > regPai.getNumero()) {
+                    aux = regPai.getNumero();
+                    regPai.setNumero(maior);
+                    seekArq(posPai);
+                    regPai.gravaNoArq(arquivo);
+                    seekArq(posMaior);
+                    regPai.leDoArq(arquivo);
+                    regPai.setNumero(aux);
+                    seekArq(posMaior);
+                    regPai.gravaNoArq(arquivo);
+                    addMov();
+                }
+                posPai--;
+            }
+            seekArq(TL-1);
+            regFilho1.leDoArq(arquivo);
+            seekArq(0);
+            regFilho2.leDoArq(arquivo);
+            seekArq(TL-1);
+            regFilho2.gravaNoArq(arquivo);
+            seekArq(0);
+            regFilho1.gravaNoArq(arquivo);
+            addMov();
+            TL--;
+        }
+    }
+
     public void QuickSortSemPivo() {
         QuickSP(0, filesize());
     }

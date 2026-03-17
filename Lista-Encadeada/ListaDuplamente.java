@@ -480,7 +480,7 @@ public class ListaDuplamente {
 
     public void HeapSort() {
         int TL = quantidade, aux, posPai, pos;
-        NoLista filho1, filho2, pai, maioFilho, NoAux;
+        NoLista filho1, filho2, pai, maiorFilho, NoAux;
         while(TL > 1) {
             posPai = TL/2-1;
             pai = posicionaPonteiro(posPai);
@@ -488,12 +488,12 @@ public class ListaDuplamente {
                 pos = posPai * 2 + 1;
                 filho1 = posicionaPonteiro(pos);
                 filho2 = filho1.getProx();
-                maioFilho = filho1;
+                maiorFilho = filho1;
                 if(pos+1 < TL && filho2.getInfo() > filho1.getInfo())
-                    maioFilho = filho2;
-                if(maioFilho.getInfo() > pai.getInfo()) {
-                    aux = maioFilho.getInfo();
-                    maioFilho.setInfo(pai.getInfo());
+                    maiorFilho = filho2;
+                if(maiorFilho.getInfo() > pai.getInfo()) {
+                    aux = maiorFilho.getInfo();
+                    maiorFilho.setInfo(pai.getInfo());
                     pai.setInfo(aux);
                 }
                 pai = pai.getAnt();
