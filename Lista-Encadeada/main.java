@@ -14,6 +14,7 @@ public class main {
         ListaDuplamente lista12 = new ListaDuplamente();
         ListaDuplamente lista13 = new ListaDuplamente();
         ListaDuplamente lista14 = new ListaDuplamente();
+        ListaDuplamente lista15 = new ListaDuplamente();
  
         System.out.println("LISTA 1:");
         lista1.geraLista();
@@ -33,6 +34,7 @@ public class main {
         lista12.copiaLista(lista1);
         lista13.copiaLista(lista1);
         lista14.copiaLista(lista1);
+        lista15.copiaLista(lista1);
 
         System.out.println("LISTA 2 SELECTION SORT:");
         lista2.SelectionSort();
@@ -97,6 +99,11 @@ public class main {
         System.out.println("LISTA 14 HEAP SORT:");
         lista14.HeapSort();
         lista14.imprimirLista();
+        System.out.println("");
+
+        System.out.println("LISTA 15 QUICK SORT SEM PIVO:");
+        lista15.QuickSortSemPivo();
+        lista15.imprimirLista();
         System.out.println("");
     }
 }

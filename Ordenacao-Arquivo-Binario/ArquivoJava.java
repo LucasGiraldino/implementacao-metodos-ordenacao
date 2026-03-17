@@ -197,6 +197,18 @@ public class ArquivoJava {
         return -1;
     }
 
+    public int getMaiorElementoArq() {
+        Registro regAux = new Registro();
+        int maior = 0;
+        seekArq(0);
+        while(!eof()) {
+            regAux.leDoArq(arquivo);
+            if(regAux.getNumero() > maior)
+                maior = regAux.getNumero();
+        }
+        return maior;
+    }
+
     // ===================================================
     // METODOS DE ORDENAÇÃO
     // ===================================================
@@ -394,6 +406,30 @@ public class ArquivoJava {
                 inicio++;
             }
         }   
+    }
+
+    public void CountingSort() {
+        int TLIndice = getMaiorElementoArq()+1, vetContagens[] = new int[getMaiorElementoArq()+1], posArq;  
+        Registro regAux = new Registro();
+
+        for(int i = 0; i < TLIndice; i++) {
+            vetContagens[i] = 0;
+        }
+        for(int i = 0; i < filesize(); i++) {
+            seekArq(i);
+            regAux.leDoArq(arquivo);
+            vetContagens[regAux.getNumero()]++;
+        }
+        for(int i = 1; i < TLIndice; i++) 
+            vetContagens[i] += vetContagens[i-1];
+
+        for(int i = 0; i < filesize(); i++) {
+            seekArq(i);
+            regAux.leDoArq(arquivo);
+            posArq = --vetContagens[regAux.getNumero()];
+            seekArq(posArq);
+            regAux.gravaNoArq(arquivo);
+        }
     }
 
 }

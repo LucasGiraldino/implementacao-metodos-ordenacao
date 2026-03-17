@@ -506,4 +506,31 @@ public class ListaDuplamente {
             TL--;
         }
     }
+
+    public void QuickSP(NoLista ini, NoLista fim) {
+        int auxInfo;
+        NoLista auxIni = ini, auxFim = fim;
+        boolean flag = true;
+        while(auxIni != auxFim) {
+            if(flag) 
+                while(auxIni != auxFim && auxIni.getInfo() <= auxFim.getInfo()) 
+                    auxIni = auxIni.getProx();
+            else
+                while(auxIni != auxFim && auxFim.getInfo() >= auxIni.getInfo()) 
+                    auxFim = auxFim.getAnt();
+            auxInfo = auxIni.getInfo();
+            auxIni.setInfo(auxFim.getInfo());
+            auxFim.setInfo(auxInfo);
+            flag = !flag;
+        }   
+        if(ini != auxFim && ini != auxIni.getAnt())
+            QuickSP(ini, auxIni.getAnt());
+        if(auxFim != fim && fim != auxFim.getProx())
+            QuickSP(auxFim.getProx(), fim);
+    }
+
+    public void QuickSortSemPivo() {
+        QuickSP(inicio, fim);
+    }
+
 }
