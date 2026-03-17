@@ -795,11 +795,11 @@ public class Principal {
             System.out.println("");
             // System.out.println(calculaCompInsDirRand(auxArqRand.filesize()));
             System.out.println("");
-        //     gravarLinhaTabela(pw, "Heap Sort", quantidadeCompOrd,
-        //             calculaCompInsDirOrd(arquivoOrdenado.filesize()), quantidadeMovOrd, 0, tempoTotalOrd,
-        //             quantidadeCompRev, calculaCompInsDirRev(auxArqReverso.filesize()), quantidadeMovRev, 0,
-        //             tempoTotalRev, quantidadeCompRand, calculaCompInsDirRand(auxArqRand.filesize()), quantidadeMovRand,
-        //             0, tempoTotalRand);   
+            gravarLinhaTabela(pw, "Heap Sort", quantidadeCompOrd,
+                    calculaCompInsDirOrd(arquivoOrdenado.filesize()), quantidadeMovOrd, 0, tempoTotalOrd,
+                    quantidadeCompRev, calculaCompInsDirRev(auxArqReverso.filesize()), quantidadeMovRev, 0,
+                    tempoTotalRev, quantidadeCompRand, calculaCompInsDirRand(auxArqRand.filesize()), quantidadeMovRand,
+                    0, tempoTotalRand);   
 
             pw.flush();
             pw.close();
