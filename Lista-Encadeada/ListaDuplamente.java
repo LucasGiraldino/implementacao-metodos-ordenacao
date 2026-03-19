@@ -59,8 +59,8 @@ public class ListaDuplamente {
 
     public NoLista posicionaPonteiro(int posicao) {
         NoLista aux = inicio;
-        if(posicao < quantidade) {
-            for(int i = 0; i < posicao; i++)
+        if (posicao < quantidade) {
+            for (int i = 0; i < posicao; i++)
                 aux = aux.getProx();
             return aux;
         }
@@ -322,19 +322,19 @@ public class ListaDuplamente {
         int maior = getMaiorElementoLista(), bucketoNo;
         NoLista auxLista = inicio, auxBucket;
         ListaDuplamente listaBucket[] = new ListaDuplamente[quantidade];
-        while(auxLista != null) {
+        while (auxLista != null) {
             bucketoNo = (quantidade * auxLista.getInfo()) / (maior + 1);
-            if(listaBucket[bucketoNo] == null) 
+            if (listaBucket[bucketoNo] == null)
                 listaBucket[bucketoNo] = new ListaDuplamente();
             listaBucket[bucketoNo].inserirNoFinal(auxLista.getInfo());
             auxLista = auxLista.getProx();
         }
         auxLista = inicio;
-        for(int i = 0; i < quantidade; i++) {
-            if(listaBucket[i] instanceof ListaDuplamente) {
+        for (int i = 0; i < quantidade; i++) {
+            if (listaBucket[i] instanceof ListaDuplamente) {
                 listaBucket[i].InsertionSort();
                 auxBucket = listaBucket[i].getInicio();
-                while(auxBucket != null) {
+                while (auxBucket != null) {
                     auxLista.setInfo(auxBucket.getInfo());
                     auxBucket = auxBucket.getProx();
                     auxLista = auxLista.getProx();
@@ -349,20 +349,20 @@ public class ListaDuplamente {
         ListaDuplamente listaAuxiliar[] = new ListaDuplamente[10];
         ListaDuplamente listaRadix = new ListaDuplamente();
         listaRadix.copiaLista(this);
-        while(maior > 0) {
+        while (maior > 0) {
             auxRadix = listaRadix.getInicio();
-            while(auxRadix != null) {
+            while (auxRadix != null) {
                 res = (auxRadix.getInfo() % mod) / div;
-                if(listaAuxiliar[res] == null)
+                if (listaAuxiliar[res] == null)
                     listaAuxiliar[res] = new ListaDuplamente();
                 listaAuxiliar[res].inserirNoFinal(auxRadix.getInfo());
                 auxRadix = auxRadix.getProx();
             }
             auxRadix = listaRadix.getInicio();
-            for(int i = 0; i < 10; i++) {
-                if(listaAuxiliar[i] != null) {
+            for (int i = 0; i < 10; i++) {
+                if (listaAuxiliar[i] != null) {
                     auxLista = listaAuxiliar[i].getInicio();
-                    while(auxLista != null) {
+                    while (auxLista != null) {
                         auxRadix.setInfo(auxLista.getInfo());
                         auxRadix = auxRadix.getProx();
                         auxLista = auxLista.getProx();
@@ -381,14 +381,14 @@ public class ListaDuplamente {
     public void GnomeSort() {
         NoLista auxLista = inicio.getProx(), marca;
         int aux;
-        while(auxLista != null) {
-            if(auxLista.getInfo() < auxLista.getAnt().getInfo()) {
+        while (auxLista != null) {
+            if (auxLista.getInfo() < auxLista.getAnt().getInfo()) {
                 aux = auxLista.getInfo();
                 auxLista.setInfo(auxLista.getAnt().getInfo());
                 auxLista.getAnt().setInfo(aux);
                 marca = auxLista;
                 auxLista = auxLista.getAnt();
-                while(auxLista.getAnt() != null && auxLista.getInfo() < auxLista.getAnt().getInfo()) {
+                while (auxLista.getAnt() != null && auxLista.getInfo() < auxLista.getAnt().getInfo()) {
                     aux = auxLista.getInfo();
                     auxLista.setInfo(auxLista.getAnt().getInfo());
                     auxLista.getAnt().setInfo(aux);
@@ -404,29 +404,29 @@ public class ListaDuplamente {
         ListaDuplamente listasParciais[] = new ListaDuplamente[quantidade];
         NoLista auxPrincipal = inicio, auxLista, auxI, auxJ;
         int pos = 0, info;
-        while(auxPrincipal != null) {
+        while (auxPrincipal != null) {
             listasParciais[pos] = new ListaDuplamente();
             listasParciais[pos].inserirNoFinal(auxPrincipal.getInfo());
-            while(auxPrincipal.getProx() != null && auxPrincipal.getInfo() < auxPrincipal.getProx().getInfo()) {
+            while (auxPrincipal.getProx() != null && auxPrincipal.getInfo() < auxPrincipal.getProx().getInfo()) {
                 listasParciais[pos].inserirNoFinal(auxPrincipal.getProx().getInfo());
                 auxPrincipal = auxPrincipal.getProx();
             }
             pos++;
             auxPrincipal = auxPrincipal.getProx();
         }
-        while(pos > 1) {
-            for(int i = 0; i < pos; i++) {
-                if((i+1) < pos) {
+        while (pos > 1) {
+            for (int i = 0; i < pos; i++) {
+                if ((i + 1) < pos) {
                     auxPrincipal = listasParciais[i].getInicio();
-                    while(auxPrincipal.getProx() != null)
+                    while (auxPrincipal.getProx() != null)
                         auxPrincipal = auxPrincipal.getProx();
-                    auxPrincipal.setProx(listasParciais[i+1].getInicio());
+                    auxPrincipal.setProx(listasParciais[i + 1].getInicio());
                     auxPrincipal.getProx().setAnt(auxPrincipal);
                     auxLista = listasParciais[i].getInicio();
-                    while(auxLista != null) {
+                    while (auxLista != null) {
                         auxI = auxLista.getProx();
                         auxJ = auxLista;
-                        while(auxJ != null && auxI != null && auxI.getInfo() < auxJ.getInfo()) {
+                        while (auxJ != null && auxI != null && auxI.getInfo() < auxJ.getInfo()) {
                             info = auxJ.getInfo();
                             auxJ.setInfo(auxI.getInfo());
                             auxI.setInfo(info);
@@ -436,9 +436,9 @@ public class ListaDuplamente {
                         }
                         auxLista = auxLista.getProx();
                     }
-                    for(int j = i+1; j < pos; j++) 
-                        if(j+1 < pos)
-                            listasParciais[j] = listasParciais[j+1];
+                    for (int j = i + 1; j < pos; j++)
+                        if (j + 1 < pos)
+                            listasParciais[j] = listasParciais[j + 1];
                     pos--;
                 }
             }
@@ -451,20 +451,20 @@ public class ListaDuplamente {
         int intervalo = 1, aux, posicaoI, posAux;
         NoLista auxPrincipal, auxI;
         boolean flag;
-        while(intervalo < quantidade)
+        while (intervalo < quantidade)
             intervalo = intervalo * 3 + 1;
         intervalo /= 3;
-        while(intervalo > 0) {
+        while (intervalo > 0) {
             posicaoI = intervalo;
-            while(posicaoI < quantidade) {
+            while (posicaoI < quantidade) {
                 auxPrincipal = posicionaPonteiro(posicaoI);
                 aux = auxPrincipal.getInfo();
                 posAux = posicaoI;
                 flag = true;
-                while(posAux >= intervalo && flag) {
-                    auxI = posicionaPonteiro(posAux-intervalo);
+                while (posAux >= intervalo && flag) {
+                    auxI = posicionaPonteiro(posAux - intervalo);
                     flag = false;
-                    if(aux < auxI.getInfo()) {
+                    if (aux < auxI.getInfo()) {
                         auxPrincipal.setInfo(auxI.getInfo());
                         posAux -= intervalo;
                         auxPrincipal = posicionaPonteiro(posAux);
@@ -481,17 +481,17 @@ public class ListaDuplamente {
     public void HeapSort() {
         int TL = quantidade, aux, posPai, pos;
         NoLista filho1, filho2, pai, maiorFilho, NoAux;
-        while(TL > 1) {
-            posPai = TL/2-1;
+        while (TL > 1) {
+            posPai = TL / 2 - 1;
             pai = posicionaPonteiro(posPai);
-            while(pai != null) {
+            while (pai != null) {
                 pos = posPai * 2 + 1;
                 filho1 = posicionaPonteiro(pos);
                 filho2 = filho1.getProx();
                 maiorFilho = filho1;
-                if(pos+1 < TL && filho2.getInfo() > filho1.getInfo())
+                if (pos + 1 < TL && filho2.getInfo() > filho1.getInfo())
                     maiorFilho = filho2;
-                if(maiorFilho.getInfo() > pai.getInfo()) {
+                if (maiorFilho.getInfo() > pai.getInfo()) {
                     aux = maiorFilho.getInfo();
                     maiorFilho.setInfo(pai.getInfo());
                     pai.setInfo(aux);
@@ -499,7 +499,7 @@ public class ListaDuplamente {
                 pai = pai.getAnt();
                 posPai--;
             }
-            NoAux = posicionaPonteiro(TL-1);
+            NoAux = posicionaPonteiro(TL - 1);
             aux = inicio.getInfo();
             inicio.setInfo(NoAux.getInfo());
             NoAux.setInfo(aux);
@@ -511,21 +511,21 @@ public class ListaDuplamente {
         int auxInfo;
         NoLista auxIni = ini, auxFim = fim;
         boolean flag = true;
-        while(auxIni != auxFim) {
-            if(flag) 
-                while(auxIni != auxFim && auxIni.getInfo() <= auxFim.getInfo()) 
+        while (auxIni != auxFim) {
+            if (flag)
+                while (auxIni != auxFim && auxIni.getInfo() <= auxFim.getInfo())
                     auxIni = auxIni.getProx();
             else
-                while(auxIni != auxFim && auxFim.getInfo() >= auxIni.getInfo()) 
+                while (auxIni != auxFim && auxFim.getInfo() >= auxIni.getInfo())
                     auxFim = auxFim.getAnt();
             auxInfo = auxIni.getInfo();
             auxIni.setInfo(auxFim.getInfo());
             auxFim.setInfo(auxInfo);
             flag = !flag;
-        }   
-        if(ini != auxFim && ini != auxIni.getAnt())
+        }
+        if (ini != auxFim && ini != auxIni.getAnt())
             QuickSP(ini, auxIni.getAnt());
-        if(auxFim != fim && fim != auxFim.getProx())
+        if (auxFim != fim && fim != auxFim.getProx())
             QuickSP(auxFim.getProx(), fim);
     }
 
@@ -533,4 +533,48 @@ public class ListaDuplamente {
         QuickSP(inicio, fim);
     }
 
+    public void QuickSortComPivo() {
+        quickCP(inicio, fim);
+    }
+
+    public void quickCP(NoLista inicio, NoLista fim) {
+        if (inicio != null && fim != null && inicio != fim && inicio != fim.getProx()) {
+            NoLista p = partition(inicio, fim);
+
+            if (p != null && p != inicio) {
+                quickCP(inicio, p.getAnt());
+            }
+            if (p != null && p != fim) {
+                quickCP(p.getProx(), fim);
+            }
+        }
+    }
+
+    private NoLista partition(NoLista inicio, NoLista fim) {
+        NoLista meio = getMeioLista(inicio, fim);
+        int pivoInfo = meio.getInfo(), temp;
+
+        meio.setInfo(fim.getInfo());
+        fim.setInfo(pivoInfo);
+
+        NoLista i = inicio.getAnt();
+        for (NoLista j = inicio; j != fim; j = j.getProx()) {
+            if (j.getInfo() <= pivoInfo) {
+                i = (i == null) ? inicio : i.getProx();
+                temp = i.getInfo();
+                i.setInfo(j.getInfo());
+                j.setInfo(temp);
+            }
+        }
+
+        if (i == null)
+            i = inicio;
+        else
+            i = i.getProx();
+        temp = i.getInfo();
+        i.setInfo(fim.getInfo());
+        fim.setInfo(temp);
+
+        return i;
+    }
 }
