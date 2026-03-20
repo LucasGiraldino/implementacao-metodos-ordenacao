@@ -698,4 +698,45 @@ public class ArquivoJava {
             pos++;
         }
     }
+
+    public void ShellSort() {
+        int intervalo = 1, posicaoI, aux, posicaoj;
+        Registro regI = new Registro(), regJ = new Registro();
+        boolean flag;
+        while (intervalo < filesize())
+            intervalo = intervalo * 3 + 1;
+        intervalo /= 3;
+        while (intervalo > 0) {
+            posicaoI = intervalo;
+            while (posicaoI < filesize()) {
+                seekArq(posicaoI);
+                regI.leDoArq(arquivo);
+                aux = regI.getNumero();
+                posicaoj = posicaoI;
+                flag = true;
+                while (posicaoj >= intervalo && flag) {
+                    seekArq(posicaoj - intervalo);
+                    regJ.leDoArq(arquivo);
+                    addComp();
+                    flag = false;
+                    if (aux < regJ.getNumero()) {
+                        seekArq(posicaoj);
+                        regI.setNumero(regJ.getNumero());
+                        regI.gravaNoArq(arquivo);
+                        addMov();
+                        posicaoj -= intervalo;
+                        seekArq(posicaoj);
+
+                        flag = true;
+                    }
+                }
+                seekArq(posicaoj);
+                regI.setNumero(aux);
+                regI.gravaNoArq(arquivo);
+                addMov();
+                posicaoI++;
+            }
+            intervalo /= 3;
+        }
+    }
 }
