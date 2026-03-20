@@ -455,7 +455,7 @@ public class ArquivoJava {
     }
 
     public void BucketSort() {
-        int maior = getMaiorElementoArq(), bucketoNo, tamanho = filesize();
+        int maior = getMaiorElementoArq(), bucketoNo, tamanho = filesize(), posArq;
         Registro regAux = new Registro(), regBucket = new Registro();
         ArquivoJava listaBucket[] = new ArquivoJava[tamanho];
 
@@ -473,7 +473,7 @@ public class ArquivoJava {
             addMov();
         }
 
-        int posArq = 0;
+        posArq = 0;
         for (int i = 0; i < tamanho; i++) {
             if (listaBucket[i] != null) {
                 listaBucket[i].InsertionSort();
@@ -651,4 +651,51 @@ public class ArquivoJava {
             QuickCP(i, fim);
     }
 
+    public void GnomeSort() {
+        int pos = 1, aux, marca;
+        boolean flag;
+        Registro regAux = new Registro(), regAnt = new Registro();
+        while (pos < filesize()) {
+            seekArq(pos);
+            regAux.leDoArq(arquivo);
+            seekArq(pos - 1);
+            regAnt.leDoArq(arquivo);
+            addComp();
+            if (regAux.getNumero() < regAnt.getNumero()) {
+                aux = regAux.getNumero();
+                regAux.setNumero(regAnt.getNumero());
+                regAnt.setNumero(aux);
+                seekArq(pos);
+                regAux.gravaNoArq(arquivo);
+                seekArq(pos - 1);
+                regAnt.gravaNoArq(arquivo);
+                addMov();
+                marca = pos;
+                pos--;
+                flag = true;
+                while (pos > 0 && flag) {
+                    seekArq(pos);
+                    regAux.leDoArq(arquivo);
+                    seekArq(pos - 1);
+                    regAnt.leDoArq(arquivo);
+                    addComp();
+                    flag = true;
+                    if (regAux.getNumero() < regAnt.getNumero()) {
+                        aux = regAux.getNumero();
+                        regAux.setNumero(regAnt.getNumero());
+                        regAnt.setNumero(aux);
+                        seekArq(pos);
+                        regAux.gravaNoArq(arquivo);
+                        seekArq(pos - 1);
+                        regAnt.gravaNoArq(arquivo);
+                        addMov();
+                        flag = false;
+                    }
+                    pos--;
+                }
+                pos = marca;
+            }
+            pos++;
+        }
+    }
 }
