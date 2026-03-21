@@ -906,4 +906,124 @@ public class ArquivoJava {
             }
         }
     }
+
+    public void MergeSort() {
+        int seq = 1;
+        int TL = filesize();
+        String tempFile1 = "./Ordenacao-Arquivo-Binario/arquivos/merge1.dat";
+        String tempFile2 = "./Ordenacao-Arquivo-Binario/arquivos/merge2.dat";
+
+        while (seq < TL) {
+            ArquivoJava lista1 = new ArquivoJava(tempFile1);
+            lista1.setNomeArquivo(tempFile1);
+            lista1.truncate(0);
+
+            ArquivoJava lista2 = new ArquivoJava(tempFile2);
+            lista2.setNomeArquivo(tempFile2);
+            lista2.truncate(0);
+
+            particaoMerge(lista1, lista2, seq);
+            fusaoMerge(lista1, lista2, seq);
+
+            try {
+                lista1.getFile().close();
+                new java.io.File(tempFile1).delete();
+            } catch (Exception e) {}
+
+            try {
+                lista2.getFile().close();
+                new java.io.File(tempFile2).delete();
+            } catch (Exception e) {}
+
+            seq *= 2;
+        }
+    }
+
+    public void particaoMerge(ArquivoJava lista1, ArquivoJava lista2, int seq) {
+        int pos = 0;
+        int TL = filesize();
+        Registro regAux = new Registro();
+        
+        while (pos < TL) {
+            for (int i = 0; i < seq && pos < TL; i++) {
+                seekArq(pos);
+                regAux.leDoArq(arquivo);
+                
+                lista1.inserirRegNoFinal(regAux);
+                addMov();
+                pos++;
+            }
+            for (int i = 0; i < seq && pos < TL; i++) {
+                seekArq(pos);
+                regAux.leDoArq(arquivo);
+                
+                lista2.inserirRegNoFinal(regAux);
+                addMov();
+                pos++;
+            }
+        }
+    }
+
+    public void fusaoMerge(ArquivoJava lista1, ArquivoJava lista2, int seq) {
+        int aux1 = 0, aux2 = 0;
+        int pos = 0;
+        int TL1 = lista1.filesize();
+        int TL2 = lista2.filesize();
+        Registro regAux1 = new Registro(), regAux2 = new Registro(), regAux = new Registro();
+        
+        while (aux1 < TL1 || aux2 < TL2) {
+            int i = 0, j = 0;
+            while (i < seq && j < seq && aux1 < TL1 && aux2 < TL2) {
+                lista1.seekArq(aux1);
+                regAux1.leDoArq(lista1.getFile());
+                
+                lista2.seekArq(aux2);
+                regAux2.leDoArq(lista2.getFile());
+                
+                addComp();
+                if (regAux1.getNumero() < regAux2.getNumero()) {
+                    regAux.setNumero(regAux1.getNumero());
+                    aux1++;
+                    i++;
+                } else {
+                    regAux.setNumero(regAux2.getNumero());
+                    aux2++;
+                    j++;
+                }
+                
+                seekArq(pos);
+                regAux.gravaNoArq(arquivo);
+                addMov();
+                pos++;
+            }
+            
+            while (i < seq && aux1 < TL1) {
+                lista1.seekArq(aux1);
+                regAux1.leDoArq(lista1.getFile());
+                
+                regAux.setNumero(regAux1.getNumero());
+                aux1++;
+                i++;
+                
+                seekArq(pos);
+                regAux.gravaNoArq(arquivo);
+                addMov();
+                pos++;
+            }
+            
+            while (j < seq && aux2 < TL2) {
+                lista2.seekArq(aux2);
+                regAux2.leDoArq(lista2.getFile());
+                
+                regAux.setNumero(regAux2.getNumero());
+                aux2++;
+                j++;
+                
+                seekArq(pos);
+                regAux.gravaNoArq(arquivo);
+                addMov();
+                pos++;
+            }
+        }
+    }
 }

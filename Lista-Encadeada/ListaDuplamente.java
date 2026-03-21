@@ -577,4 +577,63 @@ public class ListaDuplamente {
 
         return i;
     }
+
+    public void MergeSort() {
+        int seq = 1;
+        while (seq < quantidade) {
+            ListaDuplamente lista1 = new ListaDuplamente();
+            ListaDuplamente lista2 = new ListaDuplamente();
+            particao(lista1, lista2, seq);
+            fusao(lista1, lista2, seq);
+            seq *= 2;
+        }
+    }
+
+    public void particao(ListaDuplamente lista1, ListaDuplamente lista2, int seq) {
+        NoLista aux = inicio;
+        while (aux != null) {
+            for (int i = 0; i < seq && aux != null; i++) {
+                lista1.inserirNoFinal(aux.getInfo());
+                aux = aux.getProx();
+            }
+            for (int i = 0; i < seq && aux != null; i++) {
+                lista2.inserirNoFinal(aux.getInfo());
+                aux = aux.getProx();
+            }
+        }
+    }
+
+    public void fusao(ListaDuplamente lista1, ListaDuplamente lista2, int seq) {
+        NoLista aux1 = lista1.getInicio();
+        NoLista aux2 = lista2.getInicio();
+        NoLista aux = inicio;
+
+        while (aux != null) {
+            int i = 0, j = 0;
+            while (i < seq && j < seq && aux1 != null && aux2 != null) {
+                if (aux1.getInfo() < aux2.getInfo()) {
+                    aux.setInfo(aux1.getInfo());
+                    aux1 = aux1.getProx();
+                    i++;
+                } else {
+                    aux.setInfo(aux2.getInfo());
+                    aux2 = aux2.getProx();
+                    j++;
+                }
+                aux = aux.getProx();
+            }
+            while (i < seq && aux1 != null) {
+                aux.setInfo(aux1.getInfo());
+                aux1 = aux1.getProx();
+                i++;
+                aux = aux.getProx();
+            }
+            while (j < seq && aux2 != null) {
+                aux.setInfo(aux2.getInfo());
+                aux2 = aux2.getProx();
+                j++;
+                aux = aux.getProx();
+            }
+        }
+    }
 }
