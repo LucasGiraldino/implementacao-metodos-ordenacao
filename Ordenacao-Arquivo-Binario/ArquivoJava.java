@@ -492,12 +492,6 @@ public class ArquivoJava {
                     posArq++;
                 }
 
-                try {
-                    listaBucket[i].getFile().close();
-                    java.io.File fileAux = new java.io.File("./Ordenacao-Arquivo-Binario/arquivos/bucket" + i + ".dat");
-                    fileAux.delete();
-                } catch (Exception e) {
-                }
             }
         }
     }
@@ -737,6 +731,179 @@ public class ArquivoJava {
                 posicaoI++;
             }
             intervalo /= 3;
+        }
+    }
+
+    public void RadixSort() {
+        int maior = getMaiorElementoArq(), mod = 10, div = 1, res, posArq, TL = filesize();
+        ArquivoJava listaAuxiliar[] = new ArquivoJava[10];
+        Registro regRadix = new Registro(), regAux = new Registro();
+
+        while (maior > 0) {
+            for (int i = 0; i < TL; i++) {
+                seekArq(i);
+                regRadix.leDoArq(arquivo);
+
+                res = (regRadix.getNumero() % mod) / div;
+                if (listaAuxiliar[res] == null) {
+                    listaAuxiliar[res] = new ArquivoJava(
+                            "./Ordenacao-Arquivo-Binario/arquivos/radix-bucket" + res + ".dat");
+                    listaAuxiliar[res].truncate(0);
+                }
+                listaAuxiliar[res].inserirRegNoFinal(regRadix);
+                addMov();
+            }
+
+            posArq = 0;
+            for (int i = 0; i < 10; i++) {
+                if (listaAuxiliar[i] != null) {
+                    int sizeList = listaAuxiliar[i].filesize();
+                    for (int j = 0; j < sizeList; j++) {
+                        listaAuxiliar[i].seekArq(j);
+                        regAux.leDoArq(listaAuxiliar[i].getFile());
+
+                        seekArq(posArq);
+                        regAux.gravaNoArq(arquivo);
+                        addMov();
+                        posArq++;
+                    }
+                    listaAuxiliar[i] = null;
+                }
+            }
+            mod *= 10;
+            div *= 10;
+            maior /= 10;
+        }
+    }
+
+    public void TimSort() {
+        int tamanho = filesize(), pos = 0, info, p = 0;
+        ArquivoJava listasParciais[] = new ArquivoJava[tamanho];
+        Registro regAtual = new Registro(), regProx = new Registro();
+        Registro regAuxI = new Registro(), regAuxJ = new Registro();
+        boolean continua;
+
+        while (p < tamanho) {
+            listasParciais[pos] = new ArquivoJava("./Ordenacao-Arquivo-Binario/arquivos/tim-parcial" + pos + ".dat");
+            listasParciais[pos].truncate(0);
+
+            seekArq(p);
+            regAtual.leDoArq(arquivo);
+            listasParciais[pos].inserirRegNoFinal(regAtual);
+            addMov();
+
+            continua = true;
+            if (p + 1 < tamanho) {
+                seekArq(p + 1);
+                regProx.leDoArq(arquivo);
+                addComp();
+            } else {
+                continua = false;
+            }
+
+            while (continua && regAtual.getNumero() < regProx.getNumero()) {
+                listasParciais[pos].inserirRegNoFinal(regProx);
+                addMov();
+                p++;
+
+                seekArq(p);
+                regAtual.leDoArq(arquivo);
+                if (p + 1 < tamanho) {
+                    seekArq(p + 1);
+                    regProx.leDoArq(arquivo);
+                    addComp();
+                } else {
+                    continua = false;
+                }
+            }
+            pos++;
+            p++;
+        }
+
+        while (pos > 1) {
+            for (int i = 0; i < pos; i++) {
+                if ((i + 1) < pos) {
+                    int sizeProxList = listasParciais[i + 1].filesize();
+                    for (int k = 0; k < sizeProxList; k++) {
+                        listasParciais[i + 1].seekArq(k);
+                        regProx.leDoArq(listasParciais[i + 1].getFile());
+
+                        listasParciais[i].inserirRegNoFinal(regProx);
+                        addMov();
+                    }
+
+                    int sizeMerged = listasParciais[i].filesize();
+                    for (int idxLista = 0; idxLista < sizeMerged; idxLista++) {
+                        int idxI = idxLista + 1;
+                        int idxJ = idxLista;
+                        boolean continuaSwap = true;
+
+                        while (idxJ >= 0 && idxI >= 0 && idxI < sizeMerged && continuaSwap) {
+                            listasParciais[i].seekArq(idxI);
+                            regAuxI.leDoArq(listasParciais[i].getFile());
+
+                            listasParciais[i].seekArq(idxJ);
+                            regAuxJ.leDoArq(listasParciais[i].getFile());
+
+                            addComp();
+                            if (regAuxI.getNumero() < regAuxJ.getNumero()) {
+                                info = regAuxJ.getNumero();
+                                regAuxJ.setNumero(regAuxI.getNumero());
+                                regAuxI.setNumero(info);
+
+                                listasParciais[i].seekArq(idxJ);
+                                regAuxJ.gravaNoArq(listasParciais[i].getFile());
+
+                                listasParciais[i].seekArq(idxI);
+                                regAuxI.gravaNoArq(listasParciais[i].getFile());
+
+                                addMov();
+
+                                idxI--;
+                                idxJ--;
+                            } else {
+                                continuaSwap = false;
+                            }
+                        }
+                    }
+
+                    try {
+                        String oldName = listasParciais[i + 1].getNomeArquivo();
+                        listasParciais[i + 1].getFile().close();
+                        java.io.File fileAux = new java.io.File(oldName);
+                        fileAux.delete();
+                    } catch (Exception e) {
+                    }
+
+                    for (int j = i + 1; j < pos; j++) {
+                        if (j + 1 < pos) {
+                            listasParciais[j] = listasParciais[j + 1];
+                        }
+                    }
+                    pos--;
+                }
+            }
+        }
+
+        if (pos > 0 && listasParciais[0] != null) {
+            this.truncate(0);
+            int finalSize = listasParciais[0].filesize();
+            for (int k = 0; k < finalSize; k++) {
+                listasParciais[0].seekArq(k);
+                regAtual.leDoArq(listasParciais[0].getFile());
+
+                this.seekArq(k);
+                regAtual.gravaNoArq(arquivo);
+                addMov();
+            }
+
+            try {
+                String oldName = listasParciais[0].getNomeArquivo();
+                listasParciais[0].getFile().close();
+                java.io.File fileAux = new java.io.File(oldName);
+                fileAux.delete();
+            } catch (Exception e) {
+            }
         }
     }
 }
