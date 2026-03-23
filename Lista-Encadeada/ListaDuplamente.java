@@ -539,7 +539,7 @@ public class ListaDuplamente {
 
     public void quickCP(NoLista inicio, NoLista fim) {
         if (inicio != null && fim != null && inicio != fim && inicio != fim.getProx()) {
-            NoLista p = partition(inicio, fim);
+            NoLista p = particao(inicio, fim);
 
             if (p != null && p != inicio) {
                 quickCP(inicio, p.getAnt());
@@ -550,7 +550,7 @@ public class ListaDuplamente {
         }
     }
 
-    private NoLista partition(NoLista inicio, NoLista fim) {
+    private NoLista particao(NoLista inicio, NoLista fim) {
         NoLista meio = getMeioLista(inicio, fim);
         int pivoInfo = meio.getInfo(), temp;
 
@@ -560,7 +560,10 @@ public class ListaDuplamente {
         NoLista i = inicio.getAnt();
         for (NoLista j = inicio; j != fim; j = j.getProx()) {
             if (j.getInfo() <= pivoInfo) {
-                i = (i == null) ? inicio : i.getProx();
+                if (i == null)
+                    i = inicio;
+                else
+                    i = i.getProx();
                 temp = i.getInfo();
                 i.setInfo(j.getInfo());
                 j.setInfo(temp);
