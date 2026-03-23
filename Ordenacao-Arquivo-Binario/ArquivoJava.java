@@ -52,6 +52,7 @@ public class ArquivoJava {
     }
 
     public ArquivoJava(String nomearquivo) {
+        this.nomeArquivo = nomearquivo;
         try {
             arquivo = new RandomAccessFile(nomearquivo, "rw");
         } catch (IOException e) {
@@ -309,7 +310,7 @@ public class ArquivoJava {
         boolean flag = true;
         for (int TL = filesize(); TL > 0 && flag; TL--) {
             flag = false;
-            for (int i = 0; i < TL; i++) {
+            for (int i = 0; i < TL - 1; i++) {
                 seekArq(i);
                 regI.leDoArq(arquivo);
                 regJ.leDoArq(arquivo);
@@ -334,7 +335,7 @@ public class ArquivoJava {
 
         while (comb > 0) {
             comb = comb * 10 / 13;
-            for (int i = comb, j = 0; i <= TL; i++, j++) {
+            for (int i = comb, j = 0; i < TL; i++, j++) {
                 seekArq(i);
                 registroFim.leDoArq(arquivo);
                 seekArq(j);
@@ -358,7 +359,7 @@ public class ArquivoJava {
 
     public void ShakeSort() {
         boolean flag = true;
-        int inicio = 0, fim = filesize(), aux;
+        int inicio = 0, fim = filesize() - 1, aux;
         Registro registroAux = new Registro(), registroProx = new Registro();
 
         while (inicio < fim && flag) {
@@ -491,6 +492,12 @@ public class ArquivoJava {
                     addMov();
                     posArq++;
                 }
+                
+                try {
+                    String oldName = listaBucket[i].getNomeArquivo();
+                    listaBucket[i].getFile().close();
+                    if (oldName != null) new java.io.File(oldName).delete();
+                } catch (Exception e) {}
 
             }
         }
@@ -548,7 +555,7 @@ public class ArquivoJava {
     }
 
     public void QuickSortSemPivo() {
-        QuickSP(0, filesize());
+        QuickSP(0, filesize() - 1);
     }
 
     public void QuickSP(int ini, int fim) {
@@ -583,6 +590,7 @@ public class ArquivoJava {
             seekArq(auxFim);
             regFim.gravaNoArq(arquivo);
             addMov();
+            flag = !flag;
         }
         if (ini < auxIni - 1)
             QuickSP(ini, auxIni - 1);
@@ -767,6 +775,11 @@ public class ArquivoJava {
                         addMov();
                         posArq++;
                     }
+                    try {
+                        String oldName = listaAuxiliar[i].getNomeArquivo();
+                        listaAuxiliar[i].getFile().close();
+                        if (oldName != null) new java.io.File(oldName).delete();
+                    } catch (Exception e) {}
                     listaAuxiliar[i] = null;
                 }
             }
